@@ -1,343 +1,252 @@
-### [Cybersecurity](https://github.com/Komonodrg-portfolio/Cybersecurity) | [Networking](https://github.com/Komonodrg-portfolio/Networking) | [Data Science (AI)](https://github.com/Komonodrg-portfolio/AI) | [Media Creation](https://github.com/Komonodrg-portfolio/MediaCreation) | [Mission](https://github.com/Komonodrg-portfolio/Mission/)
-
----
----
-
-# 🏠 Home Network Lab Creation using EVE-NG
-
-This project demonstrates a simulated enterprise-like network lab built using **EVE-NG (Emulated Virtual Environment Next Generation)**. It's designed to emulate a small business or advanced home network, complete with routers, switches, firewalls, and virtual hosts.  With a labtop of 16GB  (recommended) of ram, this platform allows training from anywhere in the world.
+### [Home](https://github.com/Komonodrg-portfolio) | [Cybersecurity](https://github.com/Komonodrg-portfolio/Cybersecurity) | [Networking](https://github.com/Komonodrg-portfolio/Networking) | [Data Science (AI)](https://github.com/Komonodrg-portfolio/AI) | [Media Creation](https://github.com/Komonodrg-portfolio/MediaCreation) | [System Administration](https://github.com/Komonodrg-portfolio/System-Administration) | [Mission](https://github.com/Komonodrg-portfolio/Mission/)
 
 ---
 
-## 📌 Goals
-To illustrate a cost effective platform to  allow for the practice and self study in Network Engineering via providing the ability to:
+---
 
-- Design and emulate a complex network topology
-- Practice configuration of Cisco routers, Layer 2/3 switches, and firewalls
-- Test routing protocols (OSPF, EIGRP, BGP)
-- Implement VLANs and inter-VLAN routing
-- Simulate internet connectivity with NAT/PAT
-- Prepare for CCNA/CCNP certification as well as network automation
-- **Can even be expanded to allow for cyber security training**
+# 🔐 Securing Driveloop — NIST SP 800-53 (Rev 5) Control Implementation
+
+## 📌 Purpose
+
+This page documents how I am **securing a real, operating platform** — my Driveloop rideshare / vehicle-rental marketplace — by applying the **NIST Special Publication 800-53 (Revision 5)** security and privacy control catalog through the **Risk Management Framework (RMF)** process.
+
+It is written to do two things at once, in the spirit of this portfolio: **teach** the reasoning a security professional walks through, and **showcase** those skills as I implement them. This is a **living document** — the control matrix below is filled in as each control moves from *planned* to *implemented*, so you are watching the work happen, not reading a finished claim.
+
+The goal is a **security-first, production-grade platform** that mirrors enterprise practice while demonstrating hands-on skill in:
+
+- System categorization and risk-based scoping
+- Control tailoring, inheritance, and compensating-control design
+- Secure infrastructure, identity, logging, and monitoring
+- Documentation and continuous monitoring that would survive a real assessment
+
+> *"Vision without action is merely a dream. Action without vision just passes the time. Vision with action can change the world."* — Joel A. Barker
 
 ---
 
-## 🧰 Tools & Technologies
+## ⚖️ An Honest Framing First (Read This)
 
-| Tool       | Purpose                              |
-|------------|--------------------------------------|
-| EVE-NG     | Network Emulation Platform           |
-| Cisco IOU / Dynamips | Router & Switch Emulation         |
-| pfSense / OPNsense    | Open-source Firewall/Router          |
-| Linux  / Windows VMs  | Host Simulation                      |
-| Wireshark  | Packet Capture and Analysis          |
+NIST SP 800-53 is a **federal** control catalog. Driveloop is a **private commercial** system — no law forces FISMA or FedRAMP on me. I am **voluntarily aligning** to 800-53 because it is the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security programs.
+
+So the honest, professional phrasing is **"security engineering aligned to NIST SP 800-53 Rev 5 (Moderate baseline), tailored for a small commercial marketplace"** — *not* "NIST compliant." Knowing the difference between **aligned** and **compliant** is itself part of the skill set, and I want that distinction on the record.
+
+> 📎 **Catalog state (current):** NIST SP 800-53 is on **Rev 5**, latest patch release **5.2.0** (Aug 2025), which added software-update / patch-security controls (e.g., **SI-2(7) Root Cause Analysis**, an **SA-15** logging-syntax enhancement) under EO 14306. The catalog holds **20 control families**. Baselines live in **SP 800-53B**: Low ≈ 150, **Moderate ≈ 304**, High ≈ 392 controls.
 
 ---
 
+## 🧭 System Overview & Scope
 
+| Attribute | Description |
+| --- | --- |
+| **System name** | Driveloop — vehicle rental / rideshare marketplace |
+| **Boundary** | Web application, its data stores, the reverse proxy, and the vehicle-command service — *not* the internet edge or datacenter (those are inherited, see below) |
+| **Stack** | Nginx reverse proxy · Next.js (SSR) · Express API · PostgreSQL · Redis |
+| **Edge** | Cloudflare (DNS, WAF, TLS termination, DDoS) |
+| **Hosting** | Bare-metal Debian home lab today → migrating to Microsoft Azure |
+| **Sensitive data** | User PII, identity-verification documents, background-check results, tokenized payment references, booking records, vehicle telematics + **remote kill-switch command authority** |
+
+> 🔒 **OpSec note:** Exact IPs, hostnames, ports, and live config are intentionally **redacted** on this public page. What is shown is the *pattern*, not the production specifics — publishing those would violate the very boundary-protection (SC-7) and transparency (PT) controls this project is built on.
 
 ---
 
-## 🔧 Setup Instructions
+## 🗂️ Step 1 — System Categorization (FIPS 199)
 
-### Prerequisites
+Per **FIPS 199 / NIST SP 800-60**, I rate the potential impact of a loss of **Confidentiality, Integrity, and Availability**, then take the **high-water mark** as the overall level.
 
-This guide will illustrate how to setup the environment both on Windows & Linux. 
+| Security Objective | Impact | Rationale |
+| --- | --- | --- |
+| **Confidentiality** | **MODERATE** | Identity documents and background-check data are sensitive PII; a breach causes serious harm to individuals. Card data is outsourced to the payment processor, which deliberately caps this objective. |
+| **Integrity** | **MODERATE** | Tampering with bookings, balances, or verification status causes financial/legal harm. The **kill-switch command path is treated as a High-integrity enclave** (disabling a moving vehicle is a safety issue) and is segmented accordingly. |
+| **Availability** | **MODERATE** | A real operating business — downtime means lost revenue and stranded renters — but not life-safety. |
 
-<details>
- <summary><h4>a) System Requirements</h4></summary>
-  <br> 
-Before lab setup, ensure your PC/Laptop meets minimum requirements for successful operation:<br> 
- <br>
+### 🎯 Overall System Categorization
 
-**Windows:**  Click on Start > in search box type: `msinfo` > press Enter
+> **SC = { (Confidentiality, MODERATE), (Integrity, MODERATE), (Availability, MODERATE) }**
+> **➡️ Overall Impact Level: MODERATE**
 
-**Linux (Mint):** Click on LM button (bottom left) > type: `System Info` > press Enter
+---
 
+## 🎚️ Step 2 — Baseline Selection
 
- <p align="center">
-  <img src="images/MSInfo.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
-  <img src="images/MintSystemInfo.png" alt="Image 2" width="40%" />
-</p>
+The categorization drives the baseline directly. I select the **Moderate** baseline from SP 800-53B, and I reject the alternatives *on the record* — because a defensible rejection is part of the tailoring rationale:
 
-Check your system specifications vs what the [official EVE-NG installation guide](https://www.eve-ng.net/index.php/documentation/) recommends.  As of the date of this repo creation, current recommended specs:
+| Baseline | Verdict | Why |
+| --- | --- | --- |
+| **Low** | ❌ Rejected | Undersells identity-document and PII sensitivity — indefensible for the data I hold. |
+| **Moderate** | ✅ **Selected** | Matches the categorization and is a baseline I can *truthfully* implement and evidence. |
+| **High** | ❌ Rejected | ~392 controls is unimplementable for a solo operator; claiming it would be portfolio theater. I keep the *system* at Moderate and elevate only the kill-switch **enclave**. |
 
+---
 
- <p align="center">
-  <img src="images/SystemReqs.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
+## 🧬 Step 3 — Control Inheritance Model
 
-</details>
-<details>
- <summary><h4>b) Download Hypervisor (VMWare)</h4></summary>
-  <br> 
-  For this lab, we will run EVE-NG as a virtual machine from within a <a href="https://chatgpt.com/share/68cb87a6-3580-800b-a816-6c42bfab1272/">hypervisor</a> (type 2).  Both Linux and Windows versions are free, but require <a href="https://support.broadcom.com/">signing up for a broadcom account</a> first:<br>
-  <br>
-<p align="center">
- <img src="images/VMWareInstall1.png" alt="Image 1" width="43%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall2.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall3.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall4.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall5.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
-</p>  
-<br>
-Once the installation file downlods successfully, proceed with installation of VMWare:</br><br>
+The single biggest efficiency lever in RMF is **not re-implementing what a provider already gives me**. Controls I inherit (common controls) are marked as such rather than re-built — I document *which* control, *which* provider, and *which* portion.
 
-</details> 
-<details>
- <summary><h4>c) Install VMWare Workstation</h4></summary>
-  <br> 
-  
-**Windows:**  Navigate to where the file downloaded, and double click it to start the installer...
+| Layer | Owner | Representative Controls | Treatment |
+| --- | --- | --- | --- |
+| Internet edge (WAF, DDoS, TLS) | **Cloudflare** | SC-5, SC-7 (partial), SC-8 (partial) | 🔵 Inherited |
+| Physical & environmental | **Azure** (post-migration) | PE-2, PE-3, PE-6, PE-13 | 🔵 Inherited |
+| Physical (home-lab today) | **Me** | PE-2, PE-3 | 🟡 My responsibility until migration |
+| OS / platform hardening | **Me** | AC, IA, CM, SI | 🟡 System-specific |
+| Application & data | **Me** | AC, AU, SC-28, PT | 🟡 System-specific |
+| Kill-switch enclave | **Me** | AC-4, SC-7, high-integrity | 🟡 Segmented, elevated |
 
-**Linux:** A few extra steps are needed prior in order to get this installation completed:
-<br>
-Open up **Terminal** to install VMWare:
-<br>
-<br>
+> 💡 The **home-lab → Azure** move is a teaching gift: today *I* own the PE family; after migration I *inherit* it. Showing both states proves I understand the **shared-responsibility model**, not just the checklist.
 
-| Step    | Command |
-|---------|---------|
-| 1) Install required dependencies | `sudo apt install build-essential linux-headers-$(uname -r)` |
-| 2) Navigate to download location  | `cd ~/Downloads` |
-| 3) List files in Downlaods folder  | `ls` |
-| 4) Make installation file executable  | `chmod +x VMWare...bundle` |
-| 5) Run installation file  | `sudo ./VMWare...bundle` |
-<br>
-<p align="left">
- <img src="images/VMWareInstall6.png" alt="Image 1" width="60%" style="margin-right: 10px;"/>
- <br>
- <p align="left">
- <img src="images/VMWareInstall7.png" alt="Image 1" width="60%" style="margin-right: 10px;"/>
+```mermaid
+flowchart TB
+    U["Renters / Admins"]
 
- ---
+    subgraph EDGE["Cloudflare — Inherited (SC-5, SC-7, SC-8)"]
+        WAF["WAF / DDoS / TLS Edge"]
+    end
 
- <p align="center">
- <img src="images/VMWareInstall8.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall9.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall10.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
- <img src="images/VMWareInstall11.png" alt="Image 1" width="45%" style="margin-right: 10px;"/>
-</p>  
+    subgraph HOST["Azure / Home-Lab Host — Inherited / Hybrid (PE-*)"]
+        direction TB
+        subgraph SYS["My Responsibility — Driveloop Boundary"]
+            NGINX["Nginx Reverse Proxy"]
+            APP["Next.js + Express API"]
+            DB[("PostgreSQL")]
+            REDIS[("Redis")]
+            KILL["Kill-Switch Enclave (High-Integrity)"]
+        end
+    end
 
-
-
-
-  
-
- 
-</details> 
-
-
-### 1. Install EVE-NG VM in VMWare
-Follow the [official EVE-NG installation guide](https://www.eve-ng.net/index.php/documentation/) to learn bare-metal setup or continue on to see how to set it up in VMware.<br>
-<br>
-Whether you are running it on Windows or Linux (Mint), the setup process is pretty much the same:<br>
-<br> 
-a) Download EVE-NG & Required Components<br>
-
-Navigate to [EVE-NG Download page](https://www.eve-ng.net/index.php/download/) and download both: <br>
-
-- **EVE-NG CE.iso**<br> 
-- **Client Side Tools** (Windows/Linux)
-  
- <img src="images/EVENGVM1.png" width="400"/><img src="images/EVENGVM1.png" width="400"/><br>
- 
-b) Create VM (Virtual Machine)<br>
-
-In VMWare, click `file` >  `New Virtual Machine...`  > ...
-
-<img src="images/EVENGVM3.png" width="400"/>  <img src="images/EVENGVM4.png" width="400"/> <br> 
-
-... Click `Browse`, navigate to where the EVE-NG.iso file is downloaded and select it before proceeding to `Next`.<br> 
-
-<img src="images/EVENGVM5.png" width="400"/>  <img src="images/EVENGVM6.png" width="400"/>
-<img src="images/EVENGVM7.png" width="400"/>  <img src="images/EVENGVM8.png" width="400"/><br>
-<img src="images/EVENGVM9.png" width="400"/>  <img src="images/EVENGVM9a.png" width="400"/><br>
-<img src="images/EVENGVM10.png" width="400"/><br>
-<br> 
-
-c) Power on EVE-NG VM<br>
-
-Select the EVE-NG instance in VMWare and click `start`, the VM will power up, ask a few setup questions through menus (select default selections through menus until installation completes)<br> 
-
-It will reboot twice during installation, just be patient and you will eventually be met with an IP address to use to login via your PC browser:
-
-<img src="images/EVENGVM11.png" width="400"/> <img src="images/EVENGVM12.png" width="400"/> 
-
-<details>
- <summary><h4><em><b>🛠️  "Troubleshooting..."</b></em></h4></summary>
- <br> 
-<em>From within VM Window, there is an error message that neither virualization platforms "Intel VT-x or AMD V were found", as the option when creating the VM was greyed out.  Even after re-ensuring the enabling of Virtualization in the BIOS, I still had the same error:<br>
-<br>
- <img src="images/EVENGVMFix1.png" width="400"/> 
- 
- Doing a quick ask of [CHATGPT](https://chatgpt.com/share/68d1a482-7b64-8000-a8bc-3f4b402d31bf) provided steps to assist in resolving the issue.<br>
- 
- Don't be afraid to lean on the benefits AI provides, as referring to the documentation can make it hard to find a solution to  specific issues you may run into.  After applying recommended fixes:<br>
- <br>
-  <img src="images/EVENGVMFix2.png" width="400"/> <img src="images/EVENGVMFix3.png" width="400"/>
-
- Later in this guide, we will be adding devices to topologies, like this.  Without the fix, I was not able to access the devices for configuration.  Now it presents the option to telnet to the device:<br>
- <br>
- <img src="images/EVENGVMFix4.png" width="400"/>
- 
- </em><br>
-<br>
-
-</details>
-
-
-
-
-Click in VM window, login (press `ENTER` to get login prompt) and update your EVE-NG VM:  <br>
-
-| Login    | Password |
-|---------|---------|
-| `root` | `eve`|
-| `admin` | `eve`|
-
-To update EVE-NG VM, after logging in, enter command:
-
-```bash
-apt update & apt upgrade -y
+    U --> WAF --> NGINX --> APP
+    APP --> DB
+    APP --> REDIS
+    APP -. "segmented / AC-4" .-> KILL
 ```
 
-<img src="images/EVENGVM15.png" width="400"/> <img src="images/EVENGVM16.png" width="400"/><br>
+---
 
-d) Install Client Tools<br>
+## 🎛️ Step 4 — Tailoring Decisions
 
-**Windows:** Navigate to the folder where the Windows Client Tools.exe is located, double click it to run it (click `Next` through each component install):
+Tailoring is the four moves that turn a generic baseline into *my* control set.
 
-<img src="images/ClientWIN1.png" width="400"/> <img src="images/ClientWIN2.png" width="400"/><br>
+### ➖ Scoped-Out (with justification)
 
-**Linux:** The [instructions](https://github.com/SmartFinn/eve-ng-integration) for linux (mint/debian) involve a few more steps:
+| Control(s) | Justification |
+| --- | --- |
+| **PS-3, PS-4** (Personnel Screening / Termination) | Single system owner, no workforce to screen or off-board. Documented scope-out, not an oversight. |
+| **PE-\*** (post-migration) | Inherited from Azure — not implemented by me once migrated. |
 
-From **Terminal** enter:
+### 🟠 Compensating Controls
 
-```
-wget -qO- https://raw.githubusercontent.com/SmartFinn/eve-ng-integration/master/install.sh | sh
-```
--OR-
-```
-sudo add-apt-repository ppa:smartfinn/eve-ng-integration
-sudo apt-get update
-sudo apt-get install eve-ng-integration
-```
-Next, install required dependencies:
-```
+| Baseline Gap | Compensating Control | Why It's Equivalent |
+| --- | --- | --- |
+| **AC-5** Separation of Duties (only one admin) | Full audit logging (AU-*) + MFA on the single privileged account | Every privileged action is attributable and hard to hijack |
+| **AT-2/AT-3** Formal training program | Documented self-study log + this portfolio as evidence | Demonstrates security literacy for a one-person program |
 
-# Required dependencies
-sudo apt install python3 telnet
+### 🎚️ Organization-Defined Parameters
 
-# Recommended dependencies
-sudo apt install wireshark ssh-askpass vinagre
+Many controls contain fill-in-the-blank values. Mine:
 
-# Optional dependencies (if you need Docker)
-sudo apt install docker.io
-```
+| Control | Parameter | Value |
+| --- | --- | --- |
+| AC-7 | Lock after N failed attempts | **5** |
+| AC-11 | Session/device lock after inactivity | **15 min** |
+| IA-5 | Minimum password length + breached-password check | **14** chars, blocked |
+| AU-11 | Audit-record retention | **90 days** hot / **1 year** cold |
+| CP-9 | Backup frequency + restore test | **Daily**, 30-day retention, **quarterly** restore test |
+| SI-2 | Critical-patch remediation window | **7 days** (validate before deploy — the 5.2.0 balance) |
 
-<img src="images/ClientLINUX1.png" width="400"/> <img src="images/ClientLINUX12.png" width="400"/><br>
+### 🧩 Overlays Referenced
 
-<img src="images/Dependencies1.png" width="400"/> 
+No official "commercial rideshare" overlay exists, so I am **informed by** (not "compliant with") a **privacy overlay** emphasizing the PT family — mandatory given identity documents — and a **cloud** treatment borrowed conceptually for the Azure migration.
 
+---
 
+## 📊 Step 5 — Tailored Control Matrix (Living Tracker)
 
-e) Login to EVE-NG webgui<br>
+A **curated subset** of the Moderate baseline, focused on this system. Rows are added and statuses updated as controls are implemented. This is the artifact an assessor would ask for.
 
+**Status legend:** ✅ Implemented · 🟡 In Progress · ⬜ Planned · 🔵 Inherited · 🟠 Compensating · ➖ Scoped-Out
 
-Confirm you are able to access EVE-NG by opening up a web brower (Firefox/Chrome) and typing in the IP Address given by EVE-NG VM:
-<p float="center">
-  <img src="images/EVENGVM13.png" width="400" />
-  <img src="images/EVENGVM14.png" width="400" />
+| Family | ID | Control | Status | Owner / Inheritance | Param | Evidence / Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| **AC** | AC-2 | Account Management | ⬜ | Me | — | App-layer accounts |
+| **AC** | AC-3 | Access Enforcement | 🟡 | Me | — | Non-root OS user in place |
+| **AC** | AC-4 | Information Flow Enforcement | ⬜ | Me | — | Kill-switch segmentation |
+| **AC** | AC-6 | Least Privilege | 🟡 | Me | — | Non-root; app RBAC pending |
+| **AC** | AC-7 | Unsuccessful Logon Attempts | ✅ | Me | 5 | Fail2ban (network layer) |
+| **AC** | AC-11 | Device Lock | ⬜ | Me | 15 min | Admin dashboard |
+| **AC** | AC-17 | Remote Access | 🟡 | Me | — | SSH keys, non-default port |
+| **AT** | AT-2 | Literacy Training & Awareness | 🟠 | Me | — | Self-study log |
+| **AU** | AU-2 | Event Logging | ⬜ | Me | — | **Top gap — centralize logs** |
+| **AU** | AU-6 | Audit Review, Analysis, Reporting | ⬜ | Me | — | SIEM (Wazuh/ELK/Loki) |
+| **AU** | AU-9 | Protection of Audit Information | ⬜ | Me | — | Tamper-evident storage |
+| **AU** | AU-11 | Audit Record Retention | ⬜ | Me | 90d/1yr | — |
+| **CA** | CA-7 | Continuous Monitoring | ⬜ | Me | — | See §Roadmap |
+| **CM** | CM-2 | Baseline Configuration | 🟡 | Me | — | Nginx/UFW configs exist |
+| **CM** | CM-6 | Configuration Settings | 🟡 | Me | — | Move to IaC |
+| **CM** | CM-8 | System Component Inventory | ⬜ | Me | — | — |
+| **CP** | CP-9 | System Backup | ⬜ | Me | Daily/30d | pg_dump + offsite |
+| **CP** | CP-10 | Recovery & Reconstitution | ⬜ | Me | — | Tested restore |
+| **IA** | IA-2 | Identification & Authentication (users) | 🟡 | Me | — | SSH keys |
+| **IA** | IA-2(1) | **MFA to Privileged Accounts** | ⬜ | Me | — | **Highest-value next step** |
+| **IA** | IA-5 | Authenticator Management | 🟡 | Me | 14 | App password policy pending |
+| **IR** | IR-8 | Incident Response Plan | ⬜ | Me | — | One-page runbook |
+| **MP** | MP-6 | Media Sanitization | 🔵 | Azure | — | Inherited post-migration |
+| **PE** | PE-3 | Physical Access Control | 🔵 | Azure / Me | — | Home-lab = me today |
+| **PL** | PL-2 | System Security & Privacy Plan | 🟡 | Me | — | **This document** |
+| **PS** | PS-3 | Personnel Screening | ➖ | Me | — | Solo — scoped out |
+| **PT** | PT-3 | PII Processing Purposes | ⬜ | Me | — | ID-document handling |
+| **PT** | PT-5 | Privacy Notice | ⬜ | Me | — | Consent + notice |
+| **RA** | RA-3 | Risk Assessment | ⬜ | Me | — | STRIDE threat model |
+| **RA** | RA-5 | Vulnerability Monitoring & Scanning | ⬜ | Me | — | OpenVAS + OWASP ZAP |
+| **SA** | SA-11 | Developer Testing & Evaluation | ⬜ | Me | — | CI security tests |
+| **SA** | SA-15 | Development Process, Standards & Tools | ⬜ | Me | — | 5.2.0 update |
+| **SC** | SC-5 | Denial-of-Service Protection | 🔵 | Cloudflare | — | Inherited |
+| **SC** | SC-7 | Boundary Protection | 🟡 | Me + Cloudflare | — | UFW + CF WAF |
+| **SC** | SC-8 | Transmission Confidentiality & Integrity | 🟡 | Me + Cloudflare | — | TLS edge + proxy |
+| **SC** | SC-28 | Protection of Information at Rest | ⬜ | Me | — | Disk / DB encryption |
+| **SI** | SI-2 | Flaw Remediation | ⬜ | Me | 7d | unattended-upgrades |
+| **SI** | SI-3 | Malicious Code Protection | 🟡 | Me | — | Partial |
+| **SI** | SI-4 | System Monitoring | ⬜ | Me | — | IDS + SIEM |
+| **SI** | SI-7 | Software/Firmware/Info Integrity | ⬜ | Me | — | FIM; 5.2.0 revised |
+| **SR** | SR-3 | Supply Chain Controls & Processes | ⬜ | Me | — | npm audit + Dependabot |
 
-### 2. Import Cisco Images into EVE-NG
+---
 
-a) Setup OS (Operating System) for file transfer between host and VM<br>
+## 🗺️ Implementation Roadmap (Priority Order)
 
-In order to be able to use devices (routers/switches) in your lab topologies, their image files must first be added to EVE-NG:
+Sequenced by **security-value-per-effort**, each mapped to its control(s):
 
-**Windows:** Download and install [WinSCP](https://winscp.net/eng/download.php)
+1. **MFA on the admin dashboard** — *IA-2(1)*. The crown-jewel change.
+2. **Centralized, tamper-evident logging** — *AU-2 / AU-6 / AU-9*. Unlocks incident response.
+3. **Automated patching + dependency scanning** — *SI-2 / SR-3*. Demonstrates the 5.2.0 controls.
+4. **Secrets management** — *IA-5 / SC-12 / SC-28*. Out of `.env`, into a vault.
+5. **Backups with a tested restore** — *CP-9 / CP-10*. Untested backups don't count.
+6. **Segment the kill-switch path** — *SC-7 / AC-4*. Where fleet work meets security work.
+7. **Threat model** — *RA-3*. One STRIDE pass over the architecture.
+8. **Privacy controls** — *PT-3 / PT-5*. Retention + disposal for identity docs.
+9. **Vulnerability scanning** — *RA-5*. OpenVAS + OWASP ZAP.
+10. **Incident-response runbook** — *IR-4 / IR-8*. Closes the loop.
 
-<img src="images/WINSCP1.png" width="400"/> <img src="images/WINSCP2.png" width="400"/><br>
+---
 
-During Setup...Select `Typical Installation` > `Commander Style` > `Install` > `Finish`<br>
-Enter in the login information for EVE-NG to connect to your VM from WinSCP, which will allow to transfer files to it.<br>
-<br>
+## 🧾 Change Log
 
-**Linux:** Unlike Windows, Linux Mint's default file explorer has the SFTP capability to allow direct communication with EVE-NG by clicking on navigation bar and typing in:<br>
+| Date | Update |
+| --- | --- |
+| _YYYY-MM-DD_ | Initial categorization, baseline selection, and control matrix published |
 
-```
-sftp://<yourIPAddress>
-```
+---
 
-<img src="images/FileTransfer1.png" width="400"/> <img src="images/FileTransfer2.png" width="400"/><br>
+## 📚 References
 
-In order to allow for two pane look, much like WINSCP or Filezilla (provides ease for drag and drop), from `File Explorer` > click `View` > select `Extra Pane` -OR- press the key  `F3`:
+- NIST SP 800-53 Rev 5 & 5.2.0 — Security and Privacy Controls (NIST CSRC)
+- NIST SP 800-53B — Control Baselines
+- NIST SP 800-37 Rev 2 — Risk Management Framework
+- FIPS 199 / NIST SP 800-60 — Security Categorization
 
-<img src="images/FileTransfer3.png" width="400"/> 
+---
 
-... with access to EVE-NG file system, we are now ready to upload Cisco images.  You can find some practice images in the `ios/` folder in this repo.
+## 🤳 Connect with me:
 
-Per [instructions from official documentation](https://www.eve-ng.net/index.php/documentation/howtos/howto-add-cisco-vios-from-virl/):
+[![YouTube](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg)](https://www.youtube.com/@EvenSteveTech)
+[![TikTok](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/tiktok.svg)](https://tiktok.com/upcoming...)
+[![LinkedIn](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg)](https://www.linkedin.com/in/steven-komono-71790197/)
+[![Instagram](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg)](https://www.instagram.com/upcoming...)
 
-b) Uploading Format<br>
-
-To upload any image (router, switch, firewall, windows, linux, etc) you must navigate to location in EVE-NG file system to upload image files into created folders, each with a particular [folder name prefix](https://www.eve-ng.net/index.php/documentation/qemu-image-namings/).  For this lab, we will focus only the ones specific for our needs for CCNA/CCNP study and lab practice:
-
- <img src="images/FolderNaming.png" width="800"/> 
-
-c) Upload Cisco Router (L3 & L2) Images:<br>
-
-From WinSCP (Windows) or File Explorer (Linux), navigate to `/opt/unetlab/addons/qemu` path and create 2 folders, naming it "`vios-<YourFileName>`" & "`viosl2-<YourFileName>`", then copy and paste image .qcow2 files into created folders from download location:
-
-<img src="images/FileTransfer4.png" width="400"/> <img src="images/FileTransfer5.png" width="400"/><br>
-
-We must now change the name of the file via the `mv` command and fix permissons to allow EVE-NG to accept and properly run the images.  Though we've managed  EVE-NG cli from VM window in VMWare, lets do it from our **Terminal** this time:
-
-| Step    | Command |
-|---------|---------|
-| 1) Open Terminal and ssh login into EVE-NG | `ssh root@<EVE-NG VM IP address>` |
-| 2) Navigate to `qemu/` folder location  | (see pic for linux cli navigation commands) |
-
-<img src="images/Root1.png" width="400"/> <img src="images/Root2.png" width="400"/><br>
-
-| Step    | Command |
-|---------|---------|
-| 3) Change name of .qcow2 files in both folders to `virtioa.qcow2` |  -`mv vios-adventerprisek9-m.spa.159-3.m8.qcow2 virtioa.qcow2` <br> -`mv viosl2-adventerprisek9-m.spa.159-3.m8.qcow2 virtioa.qcow2` |
-| 4) Fix file permissions  | `/opt/unetlab/wrappers/unl_wrapper -a fixpermissions` |
-<br>
-<img src="images/Root3.png" width="800"/>
-<br>
-d) Test functionality<br>
-<br>
-Login to EVE-NG via Web GUI and create a `new lab` named "Test": <br> 
-<br>
-
-<img src="images/Test1.png" width="400"/><img src="images/Test2.png" width="400"/><br>
-
-Hover over the `+` sign > select `Add New Object` > select `Node`... you'll see the options for Cisco Devices are selectable.  Select `Cisco vIOS Router` and press `Enter`.  When router appears on lab, right-click on it > select `Start`, then double click on router to open up device console (select `Open Link` on the popup message):<br>
-<br> 
-
-<img src="images/Test3.png" width="400"/> <img src="images/Test4.png" width="400"/>
-
-
-
-
-
-
-d) Upload Cisco IOL (IOS on Linux) Images:
-
-See [CCNP Labs](https://github.com/Komonodrg-portfolio/---N---CCNP_Labs) for install instructions for IOL Devices.
-
-
-
-<h2> 🤳 Connect with me:</h2>
-
-[<img align="left" alt="JoshMadakor | YouTube" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg" />][youtube]
-[<img align="left" alt="JoshMadakor | Tik Tok" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/tiktok.svg" />][tiktok]
-[<img align="left" alt="JoshMadakor | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin]
-[<img align="left" alt="JoshMadakor | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />][instagram]
-
-[tiktok]: https://tiktok.com/upcoming...
-[youtube]: https://www.youtube.com/@EvenSteveTech
-[instagram]: https://www.instagram.com/upcoming...
-[linkedin]: https://www.linkedin.com/in/steven-komono-71790197/
+Colleagues, Onward.
