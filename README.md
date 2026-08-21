@@ -32,14 +32,10 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 <br>
 <b>Ride Share:</b><br>
     
-- <b>To partner or create a foundation that will provide repurposed/decommissioned cellphones / laptops to individuals in remote area</b>
-- <b>Provide scholarships to cover the costs for IT Certifications to individuals showing deep aptitude, skill, and readiness</b><br>
+- Decided on (2) FB Marketplace Ford Fusions w/in last 10-16 yrs old, needing a little more TLC to prove that I could truly do this... SUCCESS.
 
-<em>Enjoy these pictures from the trip.
 
-Colleagues,Onward.<br></em>
-
-  
+ 
 
 ![Alt text](images/Kenya/ChurchKids.png)
 
@@ -55,7 +51,9 @@ Colleagues,Onward.<br></em>
 
 ![Alt text](images/Kenya/Safari17.png)
 
-  
+<em>Enjoy these pictures from the trip.
+
+Colleagues,Onward.<br></em>
 
 </details>
 
