@@ -8,12 +8,13 @@
 
 ## 📌 Purpose
 
-This page documents how I am **securing a real, operating platform** — my Driveloop rideshare / vehicle-rental marketplace — by applying the **NIST Special Publication 800-53 (Revision 5)** security and privacy control catalog through the **Risk Management Framework (RMF)** process.
+This page documents how I **first, setup my rideshare business** then went about **securing a real, operating platform** — my Driveloop rideshare / vehicle-rental marketplace — by applying the **NIST Special Publication 800-53 (Revision 5)** security and privacy control catalog through the **Risk Management Framework (RMF)** process.
 
-It is written to do two things at once, in the spirit of this portfolio: **teach** the reasoning a security professional walks through, and **showcase** those skills as I implement them. This is a **living document** — the control matrix below is filled in as each control moves from *planned* to *implemented*, so you are watching the work happen, not reading a finished claim.
+It is written to do two things at once, in the spirit of this portfolio: **teach** the process of going about initiating a startup & showcasing the reasoning behind the security protocols I chose to employ that fit a small business, thus **showcasing** those skills as I implement them. This is a **living document** — the control matrix below is filled in as each control moves from *planned* to *implemented*, so you are watching the work happen, not reading a finished claim.
 
-The goal is a **security-first, production-grade platform** that mirrors enterprise practice while demonstrating hands-on skill in:
+The goal is a **security-first, production-grade platform** that mirrors enterprise practice while demonstrating hands-on skills in:
 
+- mechanical proficiency and problem solving
 - System categorization and risk-based scoping
 - Control tailoring, inheritance, and compensating-control design
 - Secure infrastructure, identity, logging, and monitoring
