@@ -23,7 +23,41 @@ The goal is a **security-first, production-grade platform** that mirrors enterpr
 > *"Insist on yourself; never imitate.” — Ralph Waldo Emerson"* 
 
 ---
+<details>
+ <summary><h3><em><b>🪂  "One Man's Thoughts..."</b></em></h3></summary>
+  <br> 
+<em>The summer of 2024 was an exciting time for me!  Being the son of immigrants, it was cool getting a chance to take a trip to visit the continent of my parents origin - icing on the cake was being able to travel to Kenya with my Mom (bucket list item - ✔️!)  We spent a little under a month traveling the country (literally from mountain to coast) taking in the wonders Kenya had to offer.  From the beaches of Mombasa/Nyali, to a safari in Nairobi, fishing Lake Victoria, & spending sometime in the mountains of Kisii to visit with friends, it was the trip of a lifetime.<br>  
+<br> 
+Coming back to the US was bittersweet.  Though I missed my wife and kids tremendously while gone, I couldn't shake this feeling to give back to a people who gave so much to us while on our journeys.  Specifically, I thought of the kids in a village where we attended church one Saturday(pic below) and spent a while considering how I best could leverage my talents to help them be all they could aspire to be in this lifetime, despite the extreme hardships felt in remote/rural communities.  My answer and love letter to them and all the lifelong friends met along the way: creating this repo.</em><br>
+<br>
+<b>My Vision:</b><br>
+    
+- <b>To partner or create a foundation that will provide repurposed/decommissioned cellphones / laptops to individuals in remote area</b>
+- <b>Provide scholarships to cover the costs for IT Certifications to individuals showing deep aptitude, skill, and readiness</b><br>
 
+<em>Enjoy these pictures from the trip.
+
+Colleagues,Onward.<br></em>
+
+  
+
+![Alt text](images/Kenya/ChurchKids.png)
+
+<p float="center">
+  <img src="images/Kenya/SceneryMountainsTea.png" width="200" />
+  <img src="images/Kenya/Flower4.png" width="200" />
+  <img src="images/Kenya/ScenerySafari22.png" width="200" />
+  <img src="images/Kenya/Flowers.png" width="200" />
+  <img src="images/Kenya/Giraffe.png" width="200" />
+  <img src="images/Kenya/rhinos.png" width="200" />  
+  <img src="images/Kenya/SafariCroc.png" width="200" />
+  <img src="images/Kenya/ScenerySafariHole.png" width="200" />
+
+![Alt text](images/Kenya/Safari17.png)
+
+  
+
+</details>
 ## ⚖️ An Honest Framing First (Read This)
 
 NIST SP 800-53 is a **federal** control catalog. Driveloop is a **private commercial** system — no law forces FISMA or FedRAMP on me. I am **voluntarily aligning** to 800-53 because it is the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security programs.
