@@ -20,7 +20,7 @@ The goal is a **security-first, production-grade platform** that mirrors enterpr
 - Secure infrastructure, identity, logging, and monitoring
 - Documentation and continuous monitoring that would survive a real assessment
 
-> *"Insist on yourself; never imitate.” — Ralph Waldo Emerson"* — Joel A. Barker
+> *"Insist on yourself; never imitate.” — Ralph Waldo Emerson"* 
 
 ---
 
