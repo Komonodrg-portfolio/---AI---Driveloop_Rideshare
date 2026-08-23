@@ -43,7 +43,7 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 <em>Colleagues,Onward.<br></em>
 
  <details>
- <summary><h2><b>⚖️ An Honest Framing First (Read This)"</b></h2></summary>
+ <summary><h2><b>⚖️ An Honest Framing First (Read This)</b></h2></summary>
 
 NIST SP 800-53 is a **federal** control catalog. My Business, Driveloop, is a **private commercial** system — without  FISMA or FedRAMP oversight. I  **voluntarily align** to 800-53 because it's the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security.
 
@@ -68,10 +68,10 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 
 > 🔒 **OpSec note:** Exact IPs, hostnames, ports, and live config are intentionally **redacted** on this public page. What is shown is the *pattern*, not the production specifics — publishing those would violate the very boundary-protection (SC-7) and transparency (PT) controls this project is built on.
 
----
+
 
 <details>
- <summary><h2><b>🦅 Scope"</b></h2></summary>
+ <summary><h2><b>🦅 Scope</b></h2></summary>
 
 ## 🗂️ Step 1 — System Categorization (FIPS 199)
 
