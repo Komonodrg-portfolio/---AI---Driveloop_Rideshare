@@ -72,7 +72,6 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 <details>
 <summary><h2><b>🦅 Scope</b></h2></summary>
 
-
 ## 🗂️ Step 1 — System Categorization (FIPS 199)
 
 Per **FIPS 199 / NIST SP 800-60**, I rate the potential impact of a loss of **Confidentiality, Integrity, and Availability**, then take the **high-water mark** as the overall level.
