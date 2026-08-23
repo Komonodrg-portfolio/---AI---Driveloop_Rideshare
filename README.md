@@ -54,7 +54,7 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 </details>
 ---
 
-## 🧭 System Overview & Scope
+## 🧭 System Overview
 
 | Attribute | Description |
 | --- | --- |
@@ -68,6 +68,8 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 > 🔒 **OpSec note:** Exact IPs, hostnames, ports, and live config are intentionally **redacted** on this public page. What is shown is the *pattern*, not the production specifics — publishing those would violate the very boundary-protection (SC-7) and transparency (PT) controls this project is built on.
 
 ---
+<details>
+ <summary><h2><b>🦅 Scope"</b></h2></summary>
 
 ## 🗂️ Step 1 — System Categorization (FIPS 199)
 
@@ -174,7 +176,7 @@ Many controls contain fill-in-the-blank values. Mine:
 ### 🧩 Overlays Referenced
 
 No official "commercial rideshare" overlay exists, so I am **informed by** (not "compliant with") a **privacy overlay** emphasizing the PT family — mandatory given identity documents — and a **cloud** treatment borrowed conceptually for the Azure migration.
-
+</details>
 ---
 
 ## 📊 Step 5 — Tailored Control Matrix (Living Tracker)
