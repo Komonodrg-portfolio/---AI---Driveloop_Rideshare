@@ -180,9 +180,9 @@ No official "commercial rideshare" overlay exists, so I am **informed by** (not 
 </details>
 ---
 
-## 📊 Step 5 — Tailored Control Matrix (Living Tracker)
+## 📊 Tailored Control Matrix (Living Tracker)
 
-A **curated subset** of the Moderate baseline, focused on this system. Rows are added and statuses updated as controls are implemented. This is the artifact an assessor would ask for.
+A **curated subset** of the Moderate baseline, focused on this system. Rows are added and statuses updated as controls are implemented. This is the type of artifact an assessor would evaluate.
 
 **Status legend:** ✅ Implemented · 🟡 In Progress · ⬜ Planned · 🔵 Inherited · 🟠 Compensating · ➖ Scoped-Out
 
