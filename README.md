@@ -37,7 +37,7 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 
  
 
-![Alt text](images/Kenya/ChurchKids.png)
+![Alt text](Images/CarGig1.png)
 
 <p float="center">
   <img src="images/Kenya/SceneryMountainsTea.png" width="200" />
