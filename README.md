@@ -52,6 +52,7 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 > 📎 **Catalog state (current):** NIST SP 800-53 is on **Rev 5**, latest patch release **5.2.0** (Aug 2025), which added software-update / patch-security controls (e.g., **SI-2(7) Root Cause Analysis**, an **SA-15** logging-syntax enhancement) under EO 14306. The catalog holds **20 control families**. Baselines live in **SP 800-53B**: Low ≈ 150, **Moderate ≈ 304**, High ≈ 392 controls.
 
 </details>
+
 ---
 
 ## 🧭 System Overview
@@ -68,6 +69,7 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 > 🔒 **OpSec note:** Exact IPs, hostnames, ports, and live config are intentionally **redacted** on this public page. What is shown is the *pattern*, not the production specifics — publishing those would violate the very boundary-protection (SC-7) and transparency (PT) controls this project is built on.
 
 ---
+
 <details>
  <summary><h2><b>🦅 Scope"</b></h2></summary>
 
