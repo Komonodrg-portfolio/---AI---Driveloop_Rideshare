@@ -49,11 +49,10 @@ Colleagues,Onward.<br></em>
 
  <details>
  <summary><h3><b>⚖️ An Honest Framing First (Read This)"</b></h3></summary>
-## ⚖️ An Honest Framing First (Read This)
 
-NIST SP 800-53 is a **federal** control catalog. Driveloop is a **private commercial** system — no law forces FISMA or FedRAMP on me. I am **voluntarily aligning** to 800-53 because it is the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security programs.
+NIST SP 800-53 is a **federal** control catalog. My Business, Driveloop, is a **private commercial** system — without  FISMA or FedRAMP oversight. I  **voluntarily align** to 800-53 because it's the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security.
 
-So the honest, professional phrasing is **"security engineering aligned to NIST SP 800-53 Rev 5 (Moderate baseline), tailored for a small commercial marketplace"** — *not* "NIST compliant." Knowing the difference between **aligned** and **compliant** is itself part of the skill set, and I want that distinction on the record.
+This real world project is NIST SP 800-53 **aligned** rather than **compliant** - a key distinction.
 
 > 📎 **Catalog state (current):** NIST SP 800-53 is on **Rev 5**, latest patch release **5.2.0** (Aug 2025), which added software-update / patch-security controls (e.g., **SI-2(7) Root Cause Analysis**, an **SA-15** logging-syntax enhancement) under EO 14306. The catalog holds **20 control families**. Baselines live in **SP 800-53B**: Low ≈ 150, **Moderate ≈ 304**, High ≈ 392 controls.
 
