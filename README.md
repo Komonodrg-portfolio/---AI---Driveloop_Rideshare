@@ -88,13 +88,13 @@ Per **FIPS 199 / NIST SP 800-60**, I rate the potential impact of a loss of **Co
 
 ## 🎚️ Step 2 — Baseline Selection
 
-The categorization drives the baseline directly. I select the **Moderate** baseline from SP 800-53B, and I reject the alternatives *on the record* — because a defensible rejection is part of the tailoring rationale:
+The categorization drives the baseline directly. I selected the **Moderate** baseline from SP 800-53B, as it best aligns with business strategy.
 
 | Baseline | Verdict | Why |
 | --- | --- | --- |
-| **Low** | ❌ Rejected | Undersells identity-document and PII sensitivity — indefensible for the data I hold. |
+| **Low** | ❌ Rejected | Undersells identity-document and PII sensitivity — that's a no-no |
 | **Moderate** | ✅ **Selected** | Matches the categorization and is a baseline I can *truthfully* implement and evidence. |
-| **High** | ❌ Rejected | ~392 controls is unimplementable for a solo operator; claiming it would be portfolio theater. I keep the *system* at Moderate and elevate only the kill-switch **enclave**. |
+| **High** | ❌ Rejected | ~392 controls is unimplementable for a solo operator. I keep the *system* at Moderate and elevate only the kill-switch **enclave**. |
 
 ---
 
