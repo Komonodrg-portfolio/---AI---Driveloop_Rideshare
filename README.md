@@ -23,8 +23,7 @@ The goal is a **security-first, production-grade platform** that mirrors enterpr
 > *"Insist on yourself; never imitate.” — Ralph Waldo Emerson"* 
 
 ---
-<details>
- <summary><h3><em><b>🪂  "One Man's Thoughts..."</b></em></h3></summary>
+ <summary><h2><em><b>🪂  "One Man's Thoughts..."</b></em></h2></summary>
   <br> 
 <em>After finishing up my last contract role as a Network Specialist / Systems Admin for the State of NC, D.H.H.S at the tail end of 06/26, instead of rushing immediately into finding another role, I decided to finally take time, decompress, and to do a few things for me, instead of chasing the rat race.  Though a daunting and nerve racking endeavor (see the Mrs.' constant questioning about this and that...understandably - of course) , I choose to do two things that I've always wanted to due, but the responsibilities of being a family didn't always permit, time wise:  1) I decided to take on my first Head Coach position for my Son's flag football team, and 2) I decided to start a Ride-share Rental Company.<br>  
 <br> 
