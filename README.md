@@ -47,8 +47,8 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 
 Colleagues,Onward.<br></em>
 
-</details>
 
+<details>
 ## ⚖️ An Honest Framing First (Read This)
 
 NIST SP 800-53 is a **federal** control catalog. Driveloop is a **private commercial** system — no law forces FISMA or FedRAMP on me. I am **voluntarily aligning** to 800-53 because it is the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security programs.
@@ -57,6 +57,7 @@ So the honest, professional phrasing is **"security engineering aligned to NIST 
 
 > 📎 **Catalog state (current):** NIST SP 800-53 is on **Rev 5**, latest patch release **5.2.0** (Aug 2025), which added software-update / patch-security controls (e.g., **SI-2(7) Root Cause Analysis**, an **SA-15** logging-syntax enhancement) under EO 14306. The catalog holds **20 control families**. Baselines live in **SP 800-53B**: Low ≈ 150, **Moderate ≈ 304**, High ≈ 392 controls.
 
+</details>
 ---
 
 ## 🧭 System Overview & Scope
