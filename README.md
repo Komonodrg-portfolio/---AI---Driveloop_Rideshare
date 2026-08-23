@@ -266,11 +266,16 @@ Sequenced by **security-value-per-effort**, each mapped to its control(s):
 
 ---
 
-## 🤳 Connect with me:
+<h2> 🤳 Connect with me:</h2>
 
-[![YouTube](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg)](https://www.youtube.com/@EvenSteveTech)
-[![TikTok](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/tiktok.svg)](https://tiktok.com/upcoming...)
-[![LinkedIn](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg)](https://www.linkedin.com/in/steven-komono-71790197/)
-[![Instagram](https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg)](https://www.instagram.com/upcoming...)
+[<img align="left" alt="JoshMadakor | YouTube" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/youtube.svg" />][youtube]
+[<img align="left" alt="JoshMadakor | Tik Tok" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/tiktok.svg" />][tiktok]
+[<img align="left" alt="JoshMadakor | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin]
+[<img align="left" alt="JoshMadakor | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />][instagram]
+
+[tiktok]: https://tiktok.com/upcoming...
+[youtube]: https://www.youtube.com/@EvenSteveTech
+[instagram]: https://www.instagram.com/upcoming...
+[linkedin]: https://www.linkedin.com/in/steven-komono-71790197/
 
 Colleagues, Onward.
