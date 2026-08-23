@@ -47,8 +47,8 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 
 Colleagues,Onward.<br></em>
 
-
-<details>
+ <details>
+ <summary><h3><b>⚖️ An Honest Framing First (Read This)"</b></h3></summary>
 ## ⚖️ An Honest Framing First (Read This)
 
 NIST SP 800-53 is a **federal** control catalog. Driveloop is a **private commercial** system — no law forces FISMA or FedRAMP on me. I am **voluntarily aligning** to 800-53 because it is the most rigorous, defensible control library available, and private companies routinely borrow it to structure their security programs.
