@@ -70,7 +70,8 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 
 
 <details>
-<summary><h1><b>🦅 Scope</b></h1></summary>
+<summary><h2><b>🦅 Scope</b></h2></summary>
+
 
 ## 🗂️ Step 1 — System Categorization (FIPS 199)
 
