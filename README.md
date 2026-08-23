@@ -38,18 +38,10 @@ To say either pursuit hasn't been without it's own challenges would be the talle
  
 
 ![Alt text](Images/CarGig1.png)
+![Alt text](Images/CarGig2.png)
+![Alt text](Images/CarGig3.png)
+![Alt text](Images/CarGig4.png)
 
-<p float="center">
-  <img src="images/Kenya/SceneryMountainsTea.png" width="200" />
-  <img src="images/Kenya/Flower4.png" width="200" />
-  <img src="images/Kenya/ScenerySafari22.png" width="200" />
-  <img src="images/Kenya/Flowers.png" width="200" />
-  <img src="images/Kenya/Giraffe.png" width="200" />
-  <img src="images/Kenya/rhinos.png" width="200" />  
-  <img src="images/Kenya/SafariCroc.png" width="200" />
-  <img src="images/Kenya/ScenerySafariHole.png" width="200" />
-
-![Alt text](images/Kenya/Safari17.png)
 
 <em>Enjoy these pictures from the trip.
 
