@@ -34,18 +34,13 @@ To say either pursuit hasn't been without it's own challenges would be the talle
     
 - Decided on (2) FB Marketplace Ford Fusions w/in last 10-16 yrs old, needing a little more TLC to prove that I could truly do this... SUCCESS.
 
-
- 
-
 ![Alt text](Images/CarGig1.png)
 ![Alt text](Images/CarGig2.png)
 ![Alt text](Images/CarGig3.png)
 ![Alt text](Images/CarGig4.png)
 
 
-<em>Enjoy these pictures from the trip.
-
-Colleagues,Onward.<br></em>
+<em>Colleagues,Onward.<br></em>
 
  <details>
  <summary><h2><b>⚖️ An Honest Framing First (Read This)"</b></h2></summary>
@@ -86,8 +81,8 @@ Per **FIPS 199 / NIST SP 800-60**, I rate the potential impact of a loss of **Co
 
 ### 🎯 Overall System Categorization
 
-> **SC = { (Confidentiality, MODERATE), (Integrity, MODERATE), (Availability, MODERATE) }**
-> **➡️ Overall Impact Level: MODERATE**
+ **System Categorization = { (Confidentiality, MODERATE), (Integrity, MODERATE), (Availability, MODERATE) }**
+ **➡️ Overall Impact Level: MODERATE**
 
 ---
 
