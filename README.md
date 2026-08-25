@@ -38,6 +38,8 @@ To say either pursuit hasn't been without it's own challenges would be the talle
 ![Alt text](Images/CarGig2.png)
 ![Alt text](Images/CarGig3.png)
 ![Alt text](Images/CarGig4.png)
+![Alt text](Images/CarGig5.png)
+![Alt text](Images/CarGig6.png)
 
 
 <em>Colleagues,Onward.<br></em>
