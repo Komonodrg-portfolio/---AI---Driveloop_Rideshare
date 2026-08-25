@@ -63,7 +63,7 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 | --- | --- |
 | **System name** | Driveloop — vehicle rental / rideshare marketplace |
 | **Boundary** | Web application, its data stores, the reverse proxy, and the vehicle-command service — *not* the internet edge or datacenter (those are inherited, see below) |
-| **Stack** | Nginx reverse proxy · Next.js (SSR) · Express API · PostgreSQL · Redis |
+| **Stack** | Docker · Nginx reverse proxy · Next.js (SSR) · PostgreSQL  |
 | **Edge** | Cloudflare (DNS, WAF, TLS termination, DDoS) |
 | **Hosting** | Bare-metal Debian home lab today → migrating to Microsoft Azure |
 | **Sensitive data** | User PII, identity-verification documents, background-check results, tokenized payment references, booking records, vehicle telematics + **remote kill-switch command authority** |
