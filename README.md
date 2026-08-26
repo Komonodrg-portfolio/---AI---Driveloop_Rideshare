@@ -73,9 +73,7 @@ This real world project is NIST SP 800-53 **aligned** rather than **compliant** 
 
 ![Alt text](Images/CarGig7.png)
 ![Alt text](Images/CarGig8.png)
-![Alt text](Images/CarGig9.png)
-![Alt text](Images/CarGig10.png)
-![Alt text](Images/CarGig11.png)
+
 
 
 <details>
