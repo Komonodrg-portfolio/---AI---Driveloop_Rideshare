@@ -196,7 +196,7 @@ A **curated subset** of the Moderate baseline, focused on this system. Rows are 
 
 | Family | ID | Control | Status | Owner / Inheritance | Param | Evidence / Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| **AC** | AC-2 | Account Management | ⬜ | Me | — | App-layer accounts |
+| **AC** | AC-2 | Account Management | ✅ | Me | — | App-layer accounts |
 | **AC** | AC-3 | Access Enforcement | 🟡 | Me | — | Non-root OS user in place |
 | **AC** | AC-4 | Information Flow Enforcement | ⬜ | Me | — | Kill-switch segmentation |
 | **AC** | AC-6 | Least Privilege | 🟡 | Me | — | Non-root; app RBAC pending |
