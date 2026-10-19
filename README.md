@@ -241,7 +241,7 @@ A **curated subset** of the Moderate baseline, focused on this system. Rows are 
 ---
  <details>
  <summary><h2><b>NIST FAMILY MITIGATIONS</b></h2></summary>
-**<u></u>ACCESS CONTROL (AC):<u/>**
+**<u>ACCESS CONTROL (AC):</u>**
 
 AC-2 Account Management
 
